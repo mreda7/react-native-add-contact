@@ -32,7 +32,7 @@ import java.util.Map;
 
 
 public class RNAddContactModule extends ReactContextBaseJavaModule {
-    private static final int ACTIVITY_INSERT_OR_EDIT = 8472;
+    private static final int ACTION_INSERT = 8472;
 
     private static final String E_TIMEOUT = "E_TIMEOUT";
     private static final String E_CANCELLED = "E_CANCELLED";
@@ -47,7 +47,7 @@ public class RNAddContactModule extends ReactContextBaseJavaModule {
 
         @Override
         public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
-            if (requestCode == ACTIVITY_INSERT_OR_EDIT) {
+            if (requestCode == ACTION_INSERT) {
                 if (mPromise != null) {
                     if (resultCode == Activity.RESULT_CANCELED) {
                         mPromise.reject(E_CANCELLED, "Insert or edit was cancelled");
@@ -824,12 +824,12 @@ public class RNAddContactModule extends ReactContextBaseJavaModule {
             mPromise.reject(E_TIMEOUT, "Insert or edit timed out");
         }
         mPromise = promise;
-        Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+        Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType(Contacts.CONTENT_ITEM_TYPE);
         intent.putExtra(Insert.FULL_MODE, true);
         putExtra(intent, Insert.NAME, getString(data, "name"));
         putExtra(intent, Insert.PHONETIC_NAME, getString(data, "phoneticName"));
         intent.putParcelableArrayListExtra(Insert.DATA, getContactValues(data));
-        getCurrentActivity().startActivityForResult(intent, ACTIVITY_INSERT_OR_EDIT);
+        getCurrentActivity().startActivityForResult(intent, ACTION_INSERT);
     }
 }
