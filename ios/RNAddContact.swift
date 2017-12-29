@@ -65,7 +65,7 @@ class RNAddContact: NSObject, CNContactViewControllerDelegate {
   }
   
   func viewContact(_ contact: CNMutableContact) {
-    let controller = CNContactViewController(forUnknownContact: contact)
+    let controller = CNContactViewController(forNewContact: contact)
     controller.delegate = self
     controller.contactStore = CNContactStore()
     controller.modalPresentationStyle = .pageSheet
